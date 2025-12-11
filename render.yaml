@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: backend
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    startCommand: "gunicorn MyProject.wsgi:application"
+    healthCheckPath: /
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.11"
